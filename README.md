@@ -1,116 +1,247 @@
-# AI Study Assistant — Backend
+# AI Study Assistant 🤖📚
 
-FastAPI backend that answers study questions, generates summaries/MCQs/flashcards
-via an LLM, and stores/retrieves history in SQLite.
+An AI-powered study assistant built with **Python and FastAPI** that helps students learn through AI-generated explanations, summaries, multiple-choice questions, and flashcards.
 
-## Structure
+The application exposes REST APIs for generating study content and stores study history using a SQL database.
+
+## 🚀 Features
+
+* 🧠 **AI Question Answering** — Get simple, context-aware explanations for study questions.
+* 📝 **Text Summarization** — Convert lengthy study material into concise summaries.
+* ❓ **MCQ Generator** — Generate multiple-choice questions from study material.
+* 🗂️ **Flashcard Generator** — Create flashcards for quick revision.
+* 📚 **Study History** — Store and retrieve previous study activities.
+* 🔌 **RESTful APIs** — FastAPI-based endpoints with JSON request/response handling.
+* 🧪 **Automated Testing** — API functionality tested using Pytest.
+* 🔐 **Environment-based Configuration** — API keys and configuration values are managed through environment variables.
+
+## 🛠️ Tech Stack
+
+| Technology           | Purpose                     |
+| -------------------- | --------------------------- |
+| Python               | Application development     |
+| FastAPI              | REST API framework          |
+| Pydantic             | Request/response validation |
+| SQLAlchemy           | Database interaction        |
+| SQLite               | Local database              |
+| Gemini API           | AI/LLM integration          |
+| OpenAI Python Client | LLM API interface           |
+| Pytest               | Automated testing           |
+| Postman              | API testing                 |
+| Git & GitHub         | Version control             |
+
+## 🏗️ Project Architecture
 
 ```text
-app/
-  main.py            FastAPI app, router registration, global error handler
-  config.py          Env-based settings (pydantic-settings)
-  database.py        SQLAlchemy engine/session, init_db()
-  models.py          History ORM model
-  schemas.py         Pydantic request/response models
-  routers/           One file per resource — HTTP layer only
-    ask.py
-    summary.py
-    mcqs.py
-    flashcards.py
-    history.py
-  services/
-    llm_service.py       All LLM calls (isolated, mockable, one call per feature)
-    history_service.py   All DB access for history (isolated from routers)
-tests/               Pytest suite (LLM always mocked)
-postman/             Postman collection + local environment
+ai-study-assistant/
+│
+├── app/
+│   ├── main.py                 # FastAPI application entry point
+│   ├── config.py               # Environment configuration
+│   ├── database.py             # Database configuration
+│   ├── models.py               # Database models
+│   ├── schemas.py              # Pydantic schemas
+│   │
+│   ├── routers/
+│   │   ├── ask.py              # Question answering API
+│   │   ├── summary.py          # Summary API
+│   │   ├── mcqs.py             # MCQ generation API
+│   │   ├── flashcards.py       # Flashcard generation API
+│   │   └── history.py          # Study history API
+│   │
+│   └── services/
+│       ├── llm_service.py      # LLM integration
+│       └── history_service.py  # History/database operations
+│
+├── tests/                      # Automated API tests
+│
+├── postman/                    # Postman collection and environment
+│
+├── .env.example                # Environment variable template
+├── .gitignore                  # Git ignore configuration
+├── requirements.txt            # Application dependencies
+├── requirements-dev.txt        # Development/testing dependencies
+├── pytest.ini                  # Pytest configuration
+└── README.md
 ```
 
-## Setup
+## 🔌 API Endpoints
+
+| Method | Endpoint             | Description                        |
+| ------ | -------------------- | ---------------------------------- |
+| GET    | `/health`            | Check application health           |
+| POST   | `/api/v1/ask`        | Ask an AI-powered study question   |
+| POST   | `/api/v1/summary`    | Generate a summary                 |
+| POST   | `/api/v1/mcqs`       | Generate multiple-choice questions |
+| POST   | `/api/v1/flashcards` | Generate flashcards                |
+| GET    | `/api/v1/history`    | Retrieve study history             |
+
+Interactive API documentation is available through FastAPI's Swagger UI:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+## ⚙️ Installation & Setup
+
+### 1. Clone the repository
 
 ```bash
-python -m venv venv
-source venv/bin/activate        # Windows: venv\Scripts\activate
-pip install -r requirements-dev.txt   # includes requirements.txt + pytest/httpx
-cp .env.example .env
-# edit .env and set LLM_API_KEY
+git clone https://github.com/Ashirjoseph/ai-study-assistant.git
+cd ai-study-assistant
 ```
 
-## Run
+### 2. Create a virtual environment
+
+On Windows:
+
+```cmd
+python -m venv .venv
+.venv\Scripts\activate
+```
+
+On macOS/Linux:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+### 3. Install dependencies
+
+```bash
+pip install -r requirements.txt
+pip install -r requirements-dev.txt
+```
+
+### 4. Configure environment variables
+
+Create a `.env` file based on `.env.example`.
+
+Example:
+
+```env
+APP_ENV=development
+DATABASE_URL=sqlite:///./study_assistant.db
+LLM_API_KEY=your_api_key_here
+LLM_MODEL=gemini-3.8-flash
+LLM_MAX_TOKENS=400
+LLM_BASE_URL=https://generativelanguage.googleapis.com/v1beta/openai/
+```
+
+**Never commit your `.env` file or API keys to GitHub.**
+
+### 5. Run the application
 
 ```bash
 uvicorn app.main:app --reload
 ```
 
-Server: http://localhost:8000 — Swagger UI: http://localhost:8000/docs
+The API will be available at:
 
-## Run tests
+```text
+http://127.0.0.1:8000
+```
+
+Swagger documentation:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+## 🧪 Running Tests
+
+Run the automated test suite using:
 
 ```bash
 pytest -v
 ```
 
-Tests never call the real LLM — `llm_service` functions are mocked in every test,
-and the DB is an isolated in-memory SQLite instance per test run.
+The current project test suite contains **18 automated tests**, covering the main API functionality.
 
-## Configuration (`.env`)
+## 📮 API Testing with Postman
 
-| Variable | Default | Notes |
-|---|---|---|
-| `APP_ENV` | `development` | |
-| `DATABASE_URL` | `sqlite:///./study_assistant.db` | |
-| `LLM_API_KEY` | — | required for real LLM calls |
-| `LLM_MODEL` | `gpt-4o-mini` | use a low-cost model in dev |
-| `LLM_MAX_TOKENS` | `400` | hard cap per LLM call |
-| `LLM_BASE_URL` | unset | optional, for OpenAI-compatible providers |
+A Postman collection is included in the repository:
 
-## API Reference
-
-All endpoints are prefixed `/api/v1` except `/health`.
-
-| Method | Path | Body | Notes |
-|---|---|---|---|
-| GET | `/health` | — | liveness check |
-| POST | `/ask` | `{"question": str}` | AI explanation |
-| POST | `/summary` | `{"text": str}` | 3–5 bullet summary |
-| POST | `/mcqs` | `{"text": str, "num_questions": 1-10}` | structured JSON MCQs |
-| POST | `/flashcards` | `{"text": str, "num_cards": 1-10}` | structured JSON flashcards |
-| GET | `/history` | — | query: `request_type`, `limit` (≤100), `offset` |
-| GET | `/history/{id}` | — | 404 if missing |
-| DELETE | `/history/{id}` | — | 404 if missing |
-
-**Example**
-
-```bash
-curl -X POST http://localhost:8000/api/v1/ask \
-  -H "Content-Type: application/json" \
-  -d '{"question": "What is a binary search tree?"}'
+```text
+postman/AI_Study_Assistant.postman_collection.json
 ```
+
+The collection can be imported into Postman to test the API endpoints.
+
+## 💡 Example
+
+### Ask a Question
+
+**Request**
+
+```json
+{
+  "question": "Explain photosynthesis in simple terms."
+}
+```
+
+**Response**
 
 ```json
 {
   "id": 1,
-  "question": "What is a binary search tree?",
-  "answer": "...",
-  "tokens_used": 87
+  "question": "Explain photosynthesis in simple terms.",
+  "answer": "Photosynthesis is the process plants use to make their own food using sunlight.",
+  "tokens_used": 428
 }
 ```
 
-## Postman
+## 🔐 Security
 
-Import `postman/AI_Study_Assistant.postman_collection.json` and
-`postman/local.postman_environment.json`, select the **Local** environment,
-and run requests against a running server.
+Sensitive configuration values are stored using environment variables.
 
-## Design notes / LLM token optimization
+The repository intentionally excludes:
 
-- One LLM call per feature; no conversation history is sent (each request is stateless).
-- Concise, single-purpose system prompts.
-- `LLM_MAX_TOKENS` caps every call (configurable via `.env`).
-- MCQs/flashcards use JSON response mode (`response_format={"type": "json_object"}`)
-  instead of parsing free text, and are validated against a Pydantic schema; a malformed
-  LLM response returns `502` instead of a raw crash.
-- Token usage (`tokens_used`) is captured from the API response and stored with each
-  history row when the provider reports it.
-- Errors are mapped explicitly: `422` invalid input, `404` missing history item,
-  `502` LLM failure/malformed output, `500` DB failure or unexpected error
-  (generic message only — no internals leaked).
+```text
+.env
+.venv/
+*.db
+__pycache__/
+.pytest_cache/
+```
+
+API keys should never be committed to source control.
+
+## 📌 Learning Goals
+
+This project was developed to gain practical experience with:
+
+* Python backend development
+* REST API development
+* FastAPI
+* LLM API integration
+* Prompt engineering
+* SQL/database integration
+* API testing
+* Pytest
+* Postman
+* Error handling
+* Git and GitHub
+
+## 🔮 Future Improvements
+
+* Add user authentication and authorization
+* Add persistent user accounts
+* Improve LLM response validation
+* Add richer study analytics
+* Add frontend interface
+* Add rate-limit handling and retry mechanisms
+* Add deployment using a cloud platform
+* Expand automated test coverage
+
+## 👨‍💻 Author
+
+**Ashir Joseph**
+
+GitHub:
+https://github.com/Ashirjoseph
+
+---
+
+⭐ If you find this project useful, consider giving it a star.
