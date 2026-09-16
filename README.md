@@ -235,6 +235,20 @@ This project was developed to gain practical experience with:
 * Add deployment using a cloud platform
 * Expand automated test coverage
 
+  ##  Screenshots
+
+### API Documentation
+
+![Swagger API Documentation](screenshots/swagger.png)
+
+### AI Question Answering
+
+![Ask API Response](screenshots/ask-response.png)
+
+### Text Summarization
+
+![Summary API Response](screenshots/summary-response.png)
+
 ##  Author
 
 **Ashir Joseph**
