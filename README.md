@@ -82,7 +82,7 @@ Interactive API documentation is available through FastAPI's Swagger UI:
 http://127.0.0.1:8000/docs
 ```
 
-## ⚙️ Installation & Setup
+##  Installation & Setup
 
 ### 1. Clone the repository
 
