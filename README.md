@@ -1,21 +1,21 @@
-# AI Study Assistant 🤖📚
+# AI Study Assistant 
 
 An AI-powered study assistant built with **Python and FastAPI** that helps students learn through AI-generated explanations, summaries, multiple-choice questions, and flashcards.
 
 The application exposes REST APIs for generating study content and stores study history using a SQL database.
 
-## 🚀 Features
+## Features
 
-* 🧠 **AI Question Answering** — Get simple, context-aware explanations for study questions.
-* 📝 **Text Summarization** — Convert lengthy study material into concise summaries.
-* ❓ **MCQ Generator** — Generate multiple-choice questions from study material.
-* 🗂️ **Flashcard Generator** — Create flashcards for quick revision.
-* 📚 **Study History** — Store and retrieve previous study activities.
-* 🔌 **RESTful APIs** — FastAPI-based endpoints with JSON request/response handling.
-* 🧪 **Automated Testing** — API functionality tested using Pytest.
-* 🔐 **Environment-based Configuration** — API keys and configuration values are managed through environment variables.
+*  **AI Question Answering** — Get simple, context-aware explanations for study questions.
+*  **Text Summarization** — Convert lengthy study material into concise summaries.
+*  **MCQ Generator** — Generate multiple-choice questions from study material.
+*  **Flashcard Generator** — Create flashcards for quick revision.
+*  **Study History** — Store and retrieve previous study activities.
+*  **RESTful APIs** — FastAPI-based endpoints with JSON request/response handling.
+*  **Automated Testing** — API functionality tested using Pytest.
+*  **Environment-based Configuration** — API keys and configuration values are managed through environment variables.
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 | Technology           | Purpose                     |
 | -------------------- | --------------------------- |
@@ -30,7 +30,7 @@ The application exposes REST APIs for generating study content and stores study 
 | Postman              | API testing                 |
 | Git & GitHub         | Version control             |
 
-## 🏗️ Project Architecture
+##  Project Architecture
 
 ```text
 ai-study-assistant/
@@ -65,7 +65,7 @@ ai-study-assistant/
 └── README.md
 ```
 
-## 🔌 API Endpoints
+##  API Endpoints
 
 | Method | Endpoint             | Description                        |
 | ------ | -------------------- | ---------------------------------- |
@@ -149,7 +149,7 @@ Swagger documentation:
 http://127.0.0.1:8000/docs
 ```
 
-## 🧪 Running Tests
+##  Running Tests
 
 Run the automated test suite using:
 
@@ -159,7 +159,7 @@ pytest -v
 
 The current project test suite contains **18 automated tests**, covering the main API functionality.
 
-## 📮 API Testing with Postman
+##  API Testing with Postman
 
 A Postman collection is included in the repository:
 
@@ -169,7 +169,7 @@ postman/AI_Study_Assistant.postman_collection.json
 
 The collection can be imported into Postman to test the API endpoints.
 
-## 💡 Example
+##  Example
 
 ### Ask a Question
 
@@ -192,7 +192,7 @@ The collection can be imported into Postman to test the API endpoints.
 }
 ```
 
-## 🔐 Security
+##  Security
 
 Sensitive configuration values are stored using environment variables.
 
@@ -208,7 +208,7 @@ __pycache__/
 
 API keys should never be committed to source control.
 
-## 📌 Learning Goals
+##  Learning Goals
 
 This project was developed to gain practical experience with:
 
@@ -224,7 +224,7 @@ This project was developed to gain practical experience with:
 * Error handling
 * Git and GitHub
 
-## 🔮 Future Improvements
+##  Future Improvements
 
 * Add user authentication and authorization
 * Add persistent user accounts
@@ -235,7 +235,7 @@ This project was developed to gain practical experience with:
 * Add deployment using a cloud platform
 * Expand automated test coverage
 
-## 👨‍💻 Author
+##  Author
 
 **Ashir Joseph**
 
@@ -244,4 +244,4 @@ https://github.com/Ashirjoseph
 
 ---
 
-⭐ If you find this project useful, consider giving it a star.
+ If you find this project useful, consider giving it a star.
