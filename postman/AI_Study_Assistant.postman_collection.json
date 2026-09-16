@@ -1,0 +1,122 @@
+{
+  "info": {
+    "name": "AI Study Assistant",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "REST API for the AI Study Assistant backend (ask, summary, MCQs, flashcards, history)."
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:8000" },
+    { "key": "history_id", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{base_url}}/health", "host": ["{{base_url}}"], "path": ["health"] }
+      }
+    },
+    {
+      "name": "Ask Question",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"question\": \"What is polymorphism in OOP?\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/ask",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "ask"]
+        }
+      }
+    },
+    {
+      "name": "Generate Summary",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"Paste study material here to summarize.\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/summary",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "summary"]
+        }
+      }
+    },
+    {
+      "name": "Generate MCQs",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"Paste study material here.\",\n  \"num_questions\": 5\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/mcqs",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "mcqs"]
+        }
+      }
+    },
+    {
+      "name": "Generate Flashcards",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"Paste study material here.\",\n  \"num_cards\": 5\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/flashcards",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "flashcards"]
+        }
+      }
+    },
+    {
+      "name": "List History",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/api/v1/history?limit=20&offset=0",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "history"],
+          "query": [
+            { "key": "limit", "value": "20" },
+            { "key": "offset", "value": "0" },
+            { "key": "request_type", "value": "ask", "disabled": true }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get History Item",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/api/v1/history/{{history_id}}",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "history", "{{history_id}}"]
+        }
+      }
+    },
+    {
+      "name": "Delete History Item",
+      "request": {
+        "method": "DELETE",
+        "url": {
+          "raw": "{{base_url}}/api/v1/history/{{history_id}}",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "history", "{{history_id}}"]
+        }
+      }
+    }
+  ]
+}
